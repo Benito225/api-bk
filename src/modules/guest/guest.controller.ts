@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, Param } from "@nestjs/common";
 import { GuestService } from './guest.service';
 // import { CreateGuestDto } from './dto/create-guest.dto';
 import { UpdateGuestDto } from './dto/update-guest.dto';
@@ -24,8 +24,15 @@ export class GuestController extends BaseController {
     });
   }
 
+  @Get('find/:id')
+  findOne(@Param('id') id: string) {
+    return this.run(async () => {
+      return this.guestService.findOne(id);
+    });
+  }
+
   @Get('search')
-  findOne(@Query() { search }: { search: string }) {
+  search(@Query() { search }: { search: string }) {
     return this.run(async () => {
       return this.guestService.findGuestBy(search);
     });

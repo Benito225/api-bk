@@ -62,6 +62,13 @@ export class GuestService {
     return mapData;
   }
 
+  async findOne(id: string) {
+    return this.guestModel.findOne({
+      deleted_at: null,
+      _id: id,
+    });
+  }
+
   findAll() {
     return this.guestModel.find({
       deleted_at: null,
