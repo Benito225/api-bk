@@ -45,12 +45,14 @@ export class GuestService {
       return [];
     }
 
-    const guests = await this.guestModel.find({
-      $or: [
-        { firstname: { $regex: new RegExp(search, 'i') } },
-        { lastname: { $regex: new RegExp(search, 'i') } },
-      ],
-    });
+    const guests = await this.guestModel
+      .find({
+        $or: [
+          { firstname: { $regex: new RegExp(search, 'i') } },
+          { lastname: { $regex: new RegExp(search, 'i') } },
+        ],
+      })
+      .limit(10);
 
     const mapData = guests.map((guest) => ({
       label: guest?.firstname + ' ' + (guest.lastname ? guest.lastname : ''),
